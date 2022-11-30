@@ -1,0 +1,18 @@
+{
+    "short_name": "Sobre a sua rotina",
+    "name": "rotina",
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#ffffff",
+    "theme-color": "#ffffff",
+    "background_color": "#000000",
+    "background-color": "#000000",
+    "description": "my site description",
+    "icons": [
+      {
+        "src": "static/fontawesome/livro.png",
+        "type": "image/png",
+        "sizes": "16x16"
+      }
+    ]
+  }

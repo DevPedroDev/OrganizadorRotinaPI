@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Organizador de rotina</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding-top: 0;
+        background-color: seashell;
+        font-family: 'Oswald',sans-serif;
+    }
+
+    .cabecalho, .menu{
+        display: inline-block;
+    }
+
+    .cabecalho{
+        width: 100%;
+        position: sticky;
+        background-color: darkslateblue;
+        font-family: 'Oswald', sans-serif;
+        display: inline-block;
+        height: 80px;
+        box-sizing: content-box;
+        box-shadow: 1px 1px 20px 1px slategray;
+    }
+
+    .log {
+        text-decoration: none; 
+        color: #eee; 
+        font-size: 1.3em;
+    }
+
+    .logo{
+        display: inline-block;
+        font-size: 35px;
+    }
+
+    .menu{
+        display: inline-block;
+        vertical-align: top;
+        height: 80px;
+        padding: 25px;
+        font-size: 20px;
+    }
+
+    .menu ul{
+        padding: 0;
+        margin: 0;
+    }
+
+    .menu li{
+        display: inline-block;
+    }
+
+    .menu a:hover{
+        background-color: cadetblue;
+        color: black;
+    }
+
+    @media(max-width:620px){
+        .menu{display: none;}
+    }
+
+    .cabecalho a{
+        text-decoration: none;
+        color: #eee;
+        padding: 20px;
+    }
+
+    .menu-toggle{
+        float: right;
+        border: solid 1px #777;
+        border-radius: 5px;
+        background-color: rgb(49, 48, 48);
+        box-shadow: 0px 1px 10px 1px rgb(25, 3, 124);
+        color: #eee ;
+        height: 45px;
+        padding: 10px 15px;
+        margin: 15px 15px;
+        font-size: 25px;
+    }
+
+
+    h1{
+        font-family: 'Oswald',serif;
+        font-weight: 100;
+        font-size: 50px;
+
+    }
+
+    .container-fluid{
+        position: relative;
+        margin-left: 50px;
+        margin-right: 60px;
+    }
+
+</style>
+<header class="cabecalho">
+    <div class="logo">
+        <a href="#inicio" class="log">Logo</a>
+    </div>
+    <button class="menu-toggle">
+        <i class="bi bi-justify"></i>
+    </button>
+    <nav class="menu">
+        <ul>
+            <li>
+                <a href="/">Início</a>
+            </li>
+            <li>
+                <a href="/admin">Admin</a>
+            </li>
+            <li>
+                <a href="/logout">Logout</a>
+            </li>
+
+        </ul>
+    </nav>
+</header>
+<body>
+    
+    <div class="container-fluid">
+        <div class="row 5">
+            <div class="col mt-6">
+                <div>
+                    <h1>Organizador de Rotina</h1>
+                    <hr>
+                    <form>
+                        <div class="mb-3"> 
+                            <label class="form-label">Nome:</label><br>
+                            <input type="text" name="nome" class="form-control sa" id="nome">
+                        </div>
+                        <div class="caixas">
+                            <label class="form-label"> Necessidade:</label>
+                            <select name="necessidade" id="necessidade" class="form-control ne">
+                                <option selected>Selecione</option>
+                                <option value="Remédios">Remédios</option>
+                                <option value="Trabalho">Trabalho</option>
+                                <option value="Exercícios">Exercícios</option>
+                            </select>
+                        </div>
+                        <div class="igual">
+                            <label class="form-label ao">Tempo de Duração: </label>
+                            <select name="tempo" id="tempo" class="nes">
+                                <option selected>Selecione</option>
+                                <option value="1">1 semana</option>
+                                <option value="2">2 semanas</option>
+                                <option value="3">3 semanas</option>
+                                <option value="4">4 semanas</option>
+
+                            </select>
+                        </div>
+                        <hr>
+
+                </div>
+            </div>        
+        </div>
+        <div class="row 5">
+            <div class="col mt-6">
+                <h2>Defina o Lembrete</h2>
+                <hr>
+                <div class="vezes">
+                    <label for="vezes">Vezes no dia:</label>
+                    <input type="number" name="vezes" class="form-control" id="vezes">
+                </div>
+                <div class="inicio">
+                    <label for="">Horário Início:</label><br>
+                    <input type="time" class="form-control" id="inicio">
+                </div>
+                <div class="fim">
+                    <label for="">Horário Término:</label><br>
+                    <input type="time" class="form-control" id="fim">
+                </div>
+                <hr>
+                <button type="button" class="button" onclick="carregar_dados();">Concluir</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+
+    function carregar_dados() {
+        data = new FormData()
+        data.append("nome", nome = document.getElementById('nome').value)
+        data.append("necessidade", necessidade = document.getElementById('necessidade').value)
+        data.append("tempo", tempo = document.getElementById('tempo').value)
+        data.append("vezes_dia", vezes_dia = document.getElementById('vezes').value)
+        data.append("inicio", inicio = document.getElementById('inicio').value)
+        data.append("fim", fim = document.getElementById('fim').value)
+        fetch("/valores", {
+            method: 'POST',
+            body: data
+        })
+
+        .then(function(response){
+            return response.json();
+        })
+
+        .then(function(data){
+            if(data=='1'){
+                alert('Salvo com sucesso!')
+                window.open("/admin", "_self")
+            } else{
+                alert('Não foi possível salvar')
+            }
+
+        });
+        
+    }
+   
+
+</script>
+</html>

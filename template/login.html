@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    
+    <link rel="stylesheet" href="../static/css/style1.css">
+    <link rel="manifest" href="../manifest.webmanifest" crossorigin="use-credentials">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Organizador de rotina</title>
+</head>
+<style>
+    body {
+    margin: 0;
+    padding-top: 0;
+    background-color: seashell;
+    font-family: 'Oswald',sans-serif;
+}
+
+.cabecalho{
+    width: 100%;
+    position: sticky;
+    background-color: darkslateblue;
+    font-family: 'Oswald', sans-serif;
+    display: inline-block;
+    height: 80px;
+    box-sizing: content-box;
+    box-shadow: 1px 1px 20px 1px slategray;
+}
+
+.log {
+    text-decoration: none; 
+    color: #eee; 
+    font-size: 1.3em;
+}
+
+.logo{
+    display: inline-block;
+    font-size: 35px;
+}
+
+.cabecalho a{
+    text-decoration: none;
+    color: #eee;
+    padding: 20px;
+}
+
+.container-fluid{
+    display: flex;
+    border-radius: 6px;
+    border: 3px lightslategray;
+    box-shadow: 1px 1px 5px 1px #777;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px;
+    margin: 75px;
+    margin-left: 500px;
+    margin-right: 500px;
+}
+
+.form-control{
+    width: 100%;
+    border-radius: 6px;
+    border: 3px lightslategray;
+    box-shadow: 1px 1px 5px 1px #777;
+    height: 25px;
+}
+
+
+
+.logar a{
+    padding-top: 10px;
+}
+
+
+.perfil i{
+    margin: 50px;
+    font-size: 100px;
+}
+
+.form-label{
+    font-size: 20px;
+}
+
+.camposenha{padding-top: 25px}
+
+.botao{
+    color: #fff;
+    margin: 20px 0 20px;
+    padding: 13px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rebeccapurple;
+    border-radius: 8px;
+    display: inline-block;
+    box-shadow: 3px 3px 3px #777;
+}
+
+.botao:active {
+    box-shadow: 0 0 0 0 #777, inset 3px 3px 3px #777;
+    transform: translate(3px, 3px)
+}
+
+@media(max-width:855px){
+    .container-fluid{margin-left: 20px; margin-right: 20px}
+}
+
+</style>
+<header class="cabecalho">
+    <div class="logo">
+        <a href="#inicio" class="log">Logo</a>
+    </div>
+</header>
+<body>
+    <form method="POST" action="/logar"> 
+    <div class="container-fluid">
+        <div class="perfil">
+            <i class="bi bi-person-fill"></i>
+        </div>
+        <div class="usuario">
+            <label class="form-label usuario">Usuário</label>
+            <input type="text" name="usuario" class="form-control">
+        </div>
+        <div class="camposenha">
+            <label class="form-label senha">Senha</label>
+            <input type="password" name="senha" class="form-control">
+        </div>
+        <button type="submit" class="botao">Acessar</button>
+    </div>
+    </form>
+    <script src="index.js">
+
+    </script>
+</body>
+</html>

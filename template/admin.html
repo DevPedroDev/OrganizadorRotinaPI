@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="../static/js/bootstrap.js">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Organizador de rotina</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding-top: 0;
+        background-color: seashell;
+        font-family: 'Oswald',sans-serif;
+    }
+
+    .cabecalho, .menu{
+        display: inline-block;
+    }
+
+    .cabecalho{
+        width: 100%;
+        position: sticky;
+        background-color: darkslateblue;
+        font-family: 'Oswald', sans-serif;
+        display: inline-block;
+        height: 80px;
+        box-sizing: content-box;
+        box-shadow: 1px 1px 20px 1px slategray;
+    }
+
+    .log {
+        text-decoration: none; 
+        color: #eee; 
+        font-size: 1.3em;
+    }
+
+    .logo{
+        display: inline-block;
+        font-size: 35px;
+    }
+
+    .menu{
+        display: inline-block;
+        vertical-align: top;
+        height: 80px;
+        padding: 25px;
+        font-size: 20px;
+    }
+
+    .menu ul{
+        padding: 0;
+        margin: 0;
+    }
+
+    .menu li{
+        display: inline-block;
+    }
+
+    .menu a:hover{
+        background-color: cadetblue;
+        color: black;
+    }
+
+    @media(max-width:620px){
+        .menu{display: none;}
+    }
+
+    .cabecalho a{
+        text-decoration: none;
+        color: #eee;
+        padding: 20px;
+    }
+
+    .menu-toggle{
+        float: right;
+        border: solid 1px #777;
+        border-radius: 5px;
+        background-color: rgb(49, 48, 48);
+        box-shadow: 0px 1px 10px 1px rgb(25, 3, 124);
+        color: #eee ;
+        height: 45px;
+        padding: 5px 15px;
+        margin: 15px 15px;
+        font-size: 25px;
+    }
+
+
+    h1{
+        font-family: 'Oswald',serif;
+        font-weight: 100;
+        font-size: 50px;
+
+    }
+
+    .container-fluid{
+        position: relative;
+        margin-left: 50px;
+        margin-right: 60px;
+    }
+
+</style>
+<header class="cabecalho">
+    <div class="logo">
+        <a href="#inicio" class="log">Logo</a>
+    </div>
+    <button class="menu-toggle">
+        <i class="bi bi-justify"></i>
+    </button>
+    <nav class="menu">
+        <ul>
+            <li>
+                <a href="/">Início</a>
+            </li>
+            <li>
+                <a href="/admin">Admin</a>
+            </li>
+            <li>
+                <a href="/logout">Logout</a>
+            </li>
+
+        </ul>
+    </nav>
+</header>
+<body>
+    <div class="container">
+        <div style="padding-top: 20px; padding-bottom: 20px;">
+        </div> 
+        <table class="table table-striped ">
+            <thead class="table-dark">
+            <tr style="text-align: center;">
+                <div class="topo">
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Necessidade</th>
+                <th scope="col">Duração</th>
+                <th scope="col">Vezes ao dia</th>
+                <th scope="col">Início</th>
+                <th scope="col">Fim</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Excluir</th>
+                </div>
+            </tr>
+            </thead>
+            <tbody>  
+              {%for resultado in resultados%}
+            <tr style="text-align: center;">
+                <td>{{resultado[0]}}</td>
+                <td>{{resultado[1]}}</td>
+                <td>{{resultado[2]}}</td>
+                <td>{{resultado[3]}} semanas</td>
+                <td>{{resultado[4]}}x</td>
+                <td>{{resultado[5]}}</td>
+                <td>{{resultado[6]}}</td>
+                <td><button type="button"  class="btn btn-primary" onclick="visualizarModal('editar', '{{resultado[0]}}')">Editar</button></td>
+                <td><button type="button"  class="btn btn-danger" onclick="visualizarModal('deletar', '{{resultado[0]}}')">Excluir</button></td>
+            </tr> 
+            {%endfor%}
+            </tbody>
+        </table>
+        <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Deseja editar a rotina?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <label>Nome</label>
+                    <input type="text" class="form-control" id="nome" value="">
+                    <label>Necessidade</label>
+                    <select name="necessidade" id="necessidade" class="form-control ne">
+                        <option selected>Selecione</option>
+                        <option value="Remédios">Remédios</option>
+                        <option value="Trabalho">Trabalho</option>
+                        <option value="Exercícios">Exercícios</option>
+                    </select>
+                    <label>Duração</label>
+                    <select name="tempo" id="duracao" class="nes">
+                        <option selected>Selecione</option>
+                        <option value="1">1 semana</option>
+                        <option value="2">2 semanas</option>
+                        <option value="3">3 semanas</option>
+                        <option value="4">4 semanas</option>
+                    </select><br>
+                    <label>Vezes ao dia</label>
+                    <input type="number" class="form-control" id="v_dia">
+                    <label>Início</label>
+                    <input type="time" class="form-control" id="inicio">
+                    <label>Fim</label>
+                    <input type="time" class="form-control" id="fim">
+                </div>
+
+                <div class="modal-footer">
+                    <input type="hidden" id="id_editar" name="id">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                  <button type="button"  class="btn btn-primary" onclick="editarRotina($('#id_editar').val());">Confirmar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="modal fade" id="deletar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Deseja excluir essa rotina?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+        
+                <div class="modal-footer">
+                    <input type="hidden" id="id_deletar" name="id">
+                  <button type="button"  class="btn btn-danger" onclick="deletarRotina($('#id_deletar').val());">Sim</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+
+    <script>
+    function visualizarModal(modal, id){
+            $("#id_"+modal).val(id)
+            $("#"+modal).modal('show')
+        }
+
+    function deletarRotina(id){
+            del_rotina = new FormData()
+            del_rotina.append("excluir", id)
+            fetch("/excluirRotina", {
+                method: "POST",
+                body: del_rotina
+            })
+
+            .then(function(response){
+                return response.json();
+            })
+
+            .then(function(del_rotina){
+                if(del_rotina == "1"){
+                    location.reload();
+                } else{
+                    alert('Erro ao excluir')
+                }
+            });
+            console.log('ou aqui aqui')
+        }
+
+
+    function editarRotina(){
+
+        dados = new FormData()
+        dados.append("id", document.getElementById("id_editar").value);
+        dados.append("nome", document.getElementById("nome").value);
+        dados.append("necessidade", document.getElementById("necessidade").value);
+        dados.append("duracao", document.getElementById("duracao").value);
+        dados.append("v_dia", document.getElementById("v_dia").value);
+        dados.append("inicio", document.getElementById("inicio").value);
+        dados.append("fim", document.getElementById("fim").value);
+        
+        fetch("/editarRotina", {
+            method: "POST",
+            body: dados
+        })
+
+        .then(function(response){
+            return response.json();
+        })
+
+        .then(function(dados){
+            if(dados == "1"){
+            location.reload();
+        } else {
+            alert('Erro ao editar');
+        }
+        });
+
+
+        }
+
+
+    </script>
+</body>
